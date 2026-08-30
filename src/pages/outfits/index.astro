@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import OutfitCard from '../../components/OutfitCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../../config';
+
+const outfits = (await getCollection('outfits')).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: '模特穿搭',
+  url: new URL('/outfits/', SITE.url).href,
+  description: '真实模特穿搭图文笔记，提供情趣内衣的搭配灵感',
+};
+---
+
+<Base title="模特穿搭" description="模特穿搭图文笔记，搭配灵感参考" canonical="/outfits/" jsonLd={jsonLd}>
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '模特穿搭' }]} />
+  <h1 class="text-2xl font-bold">模特穿搭</h1>
+  <p class="mt-2 text-sm text-gray-600">小红书式图文笔记，分享不同身材、场景的搭配灵感</p>
+
+  <!-- 瀑布流（CSS columns） -->
+  <div class="outfit-grid mt-8">
+    {outfits.map((o) => <OutfitCard outfit={o} />)}
+  </div>
+</Base>

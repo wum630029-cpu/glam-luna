@@ -1,0 +1,38 @@
+# 允许所有搜索引擎与 AI 爬虫抓取（SEO + AI 引用都需要被收录）
+
+User-agent: *
+Allow: /
+
+# 主要 AI 爬虫
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# 主要搜索引擎
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+Sitemap: https://glamluna.net/sitemap-index.xml

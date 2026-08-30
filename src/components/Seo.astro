@@ -1,0 +1,53 @@
+---
+import { SITE } from '../config';
+
+interface Props {
+  title: string;
+  description?: string;
+  type?: 'website' | 'article';
+  image?: string;
+  canonical?: string; // 相对路径，如 /education/slug/
+  noindex?: boolean;
+  jsonLd?: Record<string, any> | Record<string, any>[];
+}
+
+const {
+  title,
+  description = SITE.description,
+  type = 'website',
+  image,
+  canonical,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = title === SITE.name ? title : `${title} - ${SITE.name}`;
+const canonicalUrl = canonical ? new URL(canonical, Astro.site).href : Astro.url.href;
+const ogImage = image ? new URL(image, Astro.site).href : undefined;
+const jsonLdList = (Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []).filter(Boolean);
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content={SITE.language} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+
+{noindex && <meta name="robots" content="noindex,follow" />}
+
+<!-- JSON-LD 结构化数据 -->
+{jsonLdList.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}

@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE } from '../config';
+---
+
+<Base title="关于与免责声明" description="关于本站、免责声明与 18+ 提示" canonical="/about/">
+  <article class="prose mx-auto max-w-4xl">
+    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '关于' }]} />
+    <h1>关于我们</h1>
+    <p>
+      {SITE.name} 是一个专注情趣内衣选购与穿搭的内容站，提供科普知识与模特穿搭灵感。
+      （此处替换为品牌介绍。）
+    </p>
+
+    <h2>免责声明</h2>
+    <p>
+      本站内容仅供 18 岁以上成年人阅读与参考，不构成医疗建议。所有商品信息与图片版权归原作者/品牌所有，
+      如涉及侵权请联系删除。外部链接跳转至第三方平台，本站不参与交易。
+    </p>
+
+    <h2>18+ 提示</h2>
+    <p>本网站内容涉及成人话题，未满 18 岁请勿浏览。请遵守当地法律法规。</p>
+  </article>
+</Base>

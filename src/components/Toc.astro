@@ -1,0 +1,36 @@
+---
+/**
+ * 文章目录（右侧悬浮）。
+ * 依赖 remark 渲染的标题 id 锚点：headings 由 astro:content 的 render() 提供，
+ * 只取 h2，按 depth 缩进（预留 h3 缩进，本站目前主要是 h2）。
+ */
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings = [] } = Astro.props;
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{
+  toc.length > 0 && (
+    <nav aria-label="目录" class="sticky top-20 hidden max-h-[calc(100vh-6rem)] overflow-y-auto border-l border-black/10 pl-4 lg:block">
+      <p class="text-xs font-semibold uppercase tracking-wide text-gray-400">目录</p>
+      <ul class="mt-2 space-y-1.5 text-sm">
+        {toc.map((h) => (
+          <li style={`padding-left: ${(h.depth - 2) * 0.75}rem;`}>
+            <a href={`#${h.slug}`} class="block text-gray-500 transition-colors hover:text-gray-900" style="--tw-text-opacity:1;">
+              {h.text.replace(/[`*_]/g, '')}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

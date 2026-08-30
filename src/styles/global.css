@@ -1,0 +1,212 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+ * 全局基础样式 —— 暖白×纯黑（La Perla 式安静奢华）
+ * 画布 #F8F7F5 · 纯黑 #000 · 发丝线 #E5E5E5 · 无彩色强调，
+ * 奢侈感来自留白、细字重、衬线标题与描边直角按钮。
+ */
+:root {
+  --canvas: #f8f7f5;              /* 暖象牙白：页面底色（La Perla 同款） */
+  --surface: #ffffff;             /* 卡片表面 */
+  --panel: #eae7e1;               /* 暖灰米面板（La Perla token） */
+  --ink: #000000;                 /* 纯黑：主文字与主按钮 */
+  --ink-hover: #27251f;           /* 黑色悬停态（La Perla .btn-black:hover） */
+  --muted: #767676;               /* 中性灰：辅助文字 */
+  --hairline: #e5e5e5;            /* 发丝分隔线 */
+
+  /* 兼容旧令牌引用：全部收敛为黑白灰体系 */
+  --paper: var(--canvas);
+  --brand: var(--ink);
+  --gold: var(--ink);
+  --ivory: var(--ink);
+  --surface-raised: var(--panel);
+
+  --font-display: 'Playfair Display', 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  color: #14120f;
+  background: var(--canvas);
+}
+
+/* 衬线展示字体：一级～三级标题（Playfair + 思源宋） */
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+h1 {
+  letter-spacing: 0.02em;
+}
+
+::selection {
+  background: rgb(0 0 0 / 8%);
+}
+
+/*
+ * 暖中性灰映射：Tailwind 默认灰偏蓝，替换为 La Perla 同源的暖灰阶。
+ * 后续新增页面沿用原有 gray 语义类即可自动获得暖调。
+ */
+[class*="text-gray-9"],
+[class*="text-gray-8"] {
+  color: #131210;
+}
+[class*="text-gray-7"] {
+  color: #55524c;
+}
+[class*="text-gray-6"] {
+  color: #55524c;
+}
+[class*="text-gray-5"] {
+  color: #767676;
+}
+[class*="text-gray-4"],
+[class*="text-gray-3"] {
+  color: #6b655b;
+}
+[class*="hover:text-gray"]:hover {
+  color: var(--ink);
+}
+[class*="hover:bg-gray"]:hover {
+  background-color: #efede8;
+}
+[class*="bg-gray-7"] {
+  background-color: #2a2824; /* 汉堡菜单三道杠 */
+}
+[class*="bg-gray-2"] {
+  background-color: #eae7e1;
+}
+
+/*
+ * 按钮 —— 奢侈品牌标准语法：
+ * 描边直角，悬停反转为黑底白字；实心版悬停退深一档。
+ */
+.btn-outline,
+.btn-solid,
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0;
+  border: 1px solid var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.btn-outline {
+  color: var(--ink);
+  background: transparent;
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: #ffffff;
+}
+.btn-solid {
+  color: #ffffff;
+  background: var(--ink);
+}
+.btn-solid:hover {
+  background: var(--ink-hover);
+}
+/* 图片上的按钮：白描边，悬停反转为白底黑字 */
+.btn-hero {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.btn-hero:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* 文章正文（prose）：象牙底编辑排版 */
+.prose {
+  --tw-prose-body: #3d3a34;
+  --tw-prose-headings: #000000;
+  --tw-prose-bold: #000000;
+  --tw-prose-links: #000000;
+  --tw-prose-quotes: #55524c;
+  --tw-prose-quote-borders: #000000;
+  --tw-prose-bullets: #a29d94;
+  --tw-prose-counters: #a29d94;
+  --tw-prose-hr: var(--hairline);
+  --tw-prose-captions: #6b655b;
+  --tw-prose-code: #131210;
+  --tw-prose-th-borders: #d6d2ca;
+  --tw-prose-td-borders: var(--hairline);
+}
+
+/* 文章内链：细下划线的纯黑（奢侈电商惯用处理） */
+.prose a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.prose a:hover {
+  color: #767676;
+}
+
+/* 图文笔记瀑布流容器 */
+.outfit-grid {
+  columns: 2 240px;
+  column-gap: 1rem;
+}
+.outfit-grid > * {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  .outfit-grid {
+    columns: 3 260px;
+  }
+}
+@media (min-width: 1024px) {
+  .outfit-grid {
+    columns: 4 260px;
+  }
+}
+
+/* 隐藏横向轮播滚动条（移动端左右划图） */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 轮播圆点：空心环 · 激活拉长为黑色胶囊（任意照片上都可读） */
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: transparent;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 85%),
+    0 0 0 1px rgb(0 0 0 / 15%);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.carousel-dot.active {
+  width: 18px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 15%);
+}
+
+/* 标签：透明底 + 发丝描边 + 暖灰文字 */
+.tag-chip {
+  background: transparent;
+  border: 1px solid #d9d5cd;
+  color: #55524c;
+}

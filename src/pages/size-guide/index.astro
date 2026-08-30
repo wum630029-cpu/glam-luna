@@ -1,0 +1,275 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { SITE } from '../../config';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: '情趣内衣尺码表与测量计算器',
+  url: new URL('/size-guide/', SITE.url).href,
+  description: '情趣内衣尺码对照表、胸围/腰围/臀围测量方法与罩杯计算器，帮你一次量准、选对码。',
+};
+---
+
+<Base
+  title="尺码表与测量计算器"
+  description="情趣内衣尺码对照表、三围测量方法与罩杯计算器，附国际码换算，帮你一次量准选对码。"
+  canonical="/size-guide/"
+  jsonLd={jsonLd}
+>
+  <div class="mx-auto max-w-4xl">
+    <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '尺码表' }]} />
+    <h1 class="text-2xl font-bold">尺码表与测量计算器</h1>
+    <p class="mt-2 text-sm text-gray-600">量准三围，输入数值即可得到罩杯、文胸与衣裤尺码推荐，附国际码对照。</p>
+
+    <!-- 计算器 -->
+    <section class="mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+      <h2 class="text-lg font-semibold">📐 尺码计算器</h2>
+      <p class="mt-1 text-sm text-gray-500">用软尺贴肤量（别勒太紧），单位厘米。下胸围不确定可留空，系统按比例估算。</p>
+
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        <label class="block">
+          <span class="text-sm text-gray-600">上胸围（cm）<span class="text-red-500">*</span></span>
+          <input id="bust" type="number" inputmode="decimal" min="60" max="130" step="0.5" placeholder="如 86" class="mt-1 w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:ring-2" style="--tw-ring-color: var(--brand);" />
+        </label>
+        <label class="block">
+          <span class="text-sm text-gray-600">下胸围（cm，选填）</span>
+          <input id="underbust" type="number" inputmode="decimal" min="55" max="120" step="0.5" placeholder="如 70" class="mt-1 w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:ring-2" style="--tw-ring-color: var(--brand);" />
+        </label>
+        <label class="block">
+          <span class="text-sm text-gray-600">腰围（cm）<span class="text-red-500">*</span></span>
+          <input id="waist" type="number" inputmode="decimal" min="45" max="130" step="0.5" placeholder="如 66" class="mt-1 w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:ring-2" style="--tw-ring-color: var(--brand);" />
+        </label>
+        <label class="block">
+          <span class="text-sm text-gray-600">臀围（cm）<span class="text-red-500">*</span></span>
+          <input id="hip" type="number" inputmode="decimal" min="60" max="140" step="0.5" placeholder="如 92" class="mt-1 w-full rounded-lg border border-black/10 px-3 py-2 text-sm outline-none focus:ring-2" style="--tw-ring-color: var(--brand);" />
+        </label>
+      </div>
+
+      <button
+        id="calc-btn"
+        type="button"
+        class="btn-solid mt-4 w-full sm:w-auto"
+      >开始计算</button>
+
+      <div id="result" class="mt-4 hidden">
+        <div class="rounded-xl p-4" style="background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--hairline);">
+          <p class="text-sm font-semibold text-gray-800">推荐结果</p>
+          <dl id="result-list" class="mt-2 grid gap-2 text-sm text-gray-700 sm:grid-cols-3"></dl>
+        </div>
+        <p class="mt-2 text-sm leading-relaxed text-gray-400">
+          结果基于常见尺码区间估算，仅供参考。不同品牌版型有差异，下单前请以商品详情页尺码表为准；情趣内衣多为氨纶弹力面料，卡码时通常「宁大勿小」。
+        </p>
+      </div>
+      <p id="error" class="mt-3 hidden text-sm text-red-500"></p>
+    </section>
+
+    <!-- 测量方法 -->
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold">怎么量最准</h2>
+      <div class="mt-3 grid gap-3 sm:grid-cols-3">
+        <div class="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5">
+          <p class="font-medium text-gray-900">上胸围</p>
+          <p class="mt-1 text-sm leading-relaxed text-gray-600">软尺绕乳头最高点水平一周，自然呼吸、贴肤不勒。</p>
+        </div>
+        <div class="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5">
+          <p class="font-medium text-gray-900">下胸围</p>
+          <p class="mt-1 text-sm leading-relaxed text-gray-600">软尺沿胸部下缘水平一周，正常呼吸，别憋气。</p>
+        </div>
+        <div class="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5">
+          <p class="font-medium text-gray-900">腰围 / 臀围</p>
+          <p class="mt-1 text-sm leading-relaxed text-gray-600">腰围取最细处，臀围取臀部最丰满处，水平贴肤。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 罩杯对照 -->
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold">罩杯怎么算</h2>
+      <p class="mt-1 text-sm text-gray-600">罩杯 = 上胸围 − 下胸围，差值对应字母：</p>
+      <div class="mt-3 overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-black/5">
+        <table class="w-full min-w-[480px] text-sm">
+          <thead>
+            <tr class="border-b border-black/5 text-left text-gray-500">
+              <th class="px-4 py-2.5 font-medium">差值（cm）</th>
+              <th class="px-4 py-2.5 font-medium">约 7.5</th>
+              <th class="px-4 py-2.5 font-medium">10</th>
+              <th class="px-4 py-2.5 font-medium">12.5</th>
+              <th class="px-4 py-2.5 font-medium">15</th>
+              <th class="px-4 py-2.5 font-medium">17.5</th>
+              <th class="px-4 py-2.5 font-medium">20</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr class="border-b border-black/5">
+              <td class="px-4 py-2.5">罩杯</td>
+              <td class="px-4 py-2.5 font-semibold" style="color: var(--brand);">AA</td>
+              <td class="px-4 py-2.5 font-semibold" style="color: var(--brand);">A</td>
+              <td class="px-4 py-2.5 font-semibold" style="color: var(--brand);">B</td>
+              <td class="px-4 py-2.5 font-semibold" style="color: var(--brand);">C</td>
+              <td class="px-4 py-2.5 font-semibold" style="color: var(--brand);">D</td>
+              <td class="px-4 py-2.5 font-semibold" style="color: var(--brand);">E</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-sm text-gray-400">文胸尺码 = 下胸围（如 75）+ 罩杯字母（如 B），即 75B。</p>
+    </section>
+
+    <!-- 国际码对照 -->
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold">国际码对照表</h2>
+      <p class="mt-1 text-sm text-gray-600">衣裤（睡裙 / 连体衣 / 吊带）尺码：</p>
+      <div class="mt-3 overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-black/5">
+        <table class="w-full min-w-[560px] text-sm">
+          <thead>
+            <tr class="border-b border-black/5 text-left text-gray-500">
+              <th class="px-4 py-2.5 font-medium">国际码</th>
+              <th class="px-4 py-2.5 font-medium">XS</th>
+              <th class="px-4 py-2.5 font-medium">S</th>
+              <th class="px-4 py-2.5 font-medium">M</th>
+              <th class="px-4 py-2.5 font-medium">L</th>
+              <th class="px-4 py-2.5 font-medium">XL</th>
+              <th class="px-4 py-2.5 font-medium">XXL</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr class="border-b border-black/5">
+              <td class="px-4 py-2.5 text-gray-500">腰围（cm）</td>
+              <td class="px-4 py-2.5">58–62</td>
+              <td class="px-4 py-2.5">62–66</td>
+              <td class="px-4 py-2.5">66–70</td>
+              <td class="px-4 py-2.5">70–76</td>
+              <td class="px-4 py-2.5">76–82</td>
+              <td class="px-4 py-2.5">82–90</td>
+            </tr>
+            <tr class="border-b border-black/5">
+              <td class="px-4 py-2.5 text-gray-500">臀围（cm）</td>
+              <td class="px-4 py-2.5">82–86</td>
+              <td class="px-4 py-2.5">86–90</td>
+              <td class="px-4 py-2.5">90–94</td>
+              <td class="px-4 py-2.5">94–98</td>
+              <td class="px-4 py-2.5">98–104</td>
+              <td class="px-4 py-2.5">104–112</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2.5 text-gray-500">中国 / 亚洲码</td>
+              <td class="px-4 py-2.5">155/80A</td>
+              <td class="px-4 py-2.5">160/84A</td>
+              <td class="px-4 py-2.5">165/88A</td>
+              <td class="px-4 py-2.5">170/92A</td>
+              <td class="px-4 py-2.5">175/96A</td>
+              <td class="px-4 py-2.5">180/100A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-sm text-gray-400">欧美码偏大，日韩码偏小，网购跨境时请优先看「实际测量值」，别只看 S/M/L 字母。</p>
+    </section>
+
+    <!-- 选码原则 -->
+    <section class="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+      <h2 class="text-lg font-semibold">选码三条原则</h2>
+      <ul class="mt-3 space-y-2 text-sm leading-relaxed text-gray-700">
+        <li><span class="font-semibold" style="color: var(--brand);">宁大勿小。</span>情趣内衣是氨纶弹力面料，过小会勒痕、压迫呼吸；卡在两个码之间选大一码。</li>
+        <li><span class="font-semibold" style="color: var(--brand);">看款式。</span>连体衣、束身衣这类全包覆紧身款尤其不能选小；睡裙类宽松款大一点反而慵懒。</li>
+        <li><span class="font-semibold" style="color: var(--brand);">以商品尺码表为准。</span>每个品牌版型不同，本页结果为通用估算，下单前以详情页实测数据为准。</li>
+      </ul>
+    </section>
+
+    <div class="mt-8">
+      <a href="/education/first-lingerie-guide/" class="border-b border-black pb-0.5 text-sm transition-colors hover:text-gray-500">尺码之外，第一件怎么选：材质、尺码与身材全攻略</a>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+
+  const cupMap = [
+    [7.5, 'AA'], [10, 'A'], [12.5, 'B'], [15, 'C'], [17.5, 'D'], [20, 'E'], [22.5, 'F'],
+  ];
+
+  function cupFromDiff(diff) {
+    if (diff < 7.5) return 'AA 以下';
+    for (let i = 0; i < cupMap.length; i++) {
+      if (diff < cupMap[i][0] + 2.5) return cupMap[i][1];
+    }
+    return 'F 以上';
+  }
+
+  // 下胸围 → 文胸底围（70/75/80/85/90…，就近 5cm 一档）
+  function bandFromUnderbust(under) {
+    return Math.max(65, Math.round(under / 5) * 5);
+  }
+
+  // 腰围/臀围 → 衣裤尺码（取更保守的大码）
+  function clothingSize(waist, hip) {
+    const sizes = [
+      { label: 'XS', w: [58, 62], h: [82, 86] },
+      { label: 'S', w: [62, 66], h: [86, 90] },
+      { label: 'M', w: [66, 70], h: [90, 94] },
+      { label: 'L', w: [70, 76], h: [94, 98] },
+      { label: 'XL', w: [76, 82], h: [98, 104] },
+      { label: 'XXL', w: [82, 90], h: [104, 112] },
+    ];
+    const order = sizes.map((s) => s.label);
+    const pick = (v, key) => {
+      if (v < sizes[0][key][0]) return 0;
+      for (let i = 0; i < sizes.length; i++) {
+        const [lo, hi] = sizes[i][key];
+        if (v >= lo && v < hi) return i;
+      }
+      return sizes.length - 1;
+    };
+    const idx = Math.max(pick(waist, 'w'), pick(hip, 'h'));
+    return order[idx];
+  }
+
+  $('calc-btn')?.addEventListener('click', () => {
+    const bust = parseFloat($('bust').value);
+    const waist = parseFloat($('waist').value);
+    const hip = parseFloat($('hip').value);
+    const underRaw = $('underbust').value;
+    const err = $('error');
+    const result = $('result');
+
+    err.classList.add('hidden');
+    result.classList.add('hidden');
+
+    if (!bust || !waist || !hip) {
+      err.textContent = '请填写上胸围、腰围、臀围三项（下胸围可留空）。';
+      err.classList.remove('hidden');
+      return;
+    }
+    if (bust < 60 || bust > 130 || waist < 45 || waist > 130 || hip < 60 || hip > 140) {
+      err.textContent = '数值超出常见范围，请核对后重填。';
+      err.classList.remove('hidden');
+      return;
+    }
+
+    // 下胸围：未填则按比例估算
+    const under = underRaw ? parseFloat(underRaw) : Math.round(bust * 0.82);
+
+    const diff = bust - under;
+    const cup = cupFromDiff(diff);
+    const band = bandFromUnderbust(under);
+    const braSize = cup.includes('以下') || cup.includes('以上') ? `${band} 底围` : `${band}${cup}`;
+    const clothes = clothingSize(waist, hip);
+
+    const items = [
+      ['文胸尺码', braSize],
+      ['罩杯', cup],
+      ['衣裤尺码', clothes],
+    ];
+    const list = $('result-list');
+    list.innerHTML = items
+      .map(
+        ([k, v]) =>
+          `<div><dt class="text-xs text-gray-400">${k}</dt><dd class="mt-0.5 text-base font-bold" style="color: var(--brand);">${v}</dd></div>`,
+      )
+      .join('');
+    result.classList.remove('hidden');
+  });
+</script>

@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  outfit: CollectionEntry<'outfits'>;
+}
+
+const { outfit } = Astro.props;
+const { title, description, cover } = outfit.data;
+---
+
+<a
+  href={`/outfits/${outfit.id}/`}
+  class="group block overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition hover:shadow-md"
+>
+  {
+    cover ? (
+      <Image
+        src={cover}
+        alt={title}
+        widths={[480, 768]}
+        sizes="(max-width: 768px) 100vw, 25vw"
+        class="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+    ) : (
+      <div class="aspect-video w-full bg-gray-200" />
+    )
+  }
+  <div class="p-3">
+    <h3 class="line-clamp-2 text-sm font-semibold text-gray-900">{title}</h3>
+    <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-gray-600">{description}</p>
+  </div>
+</a>

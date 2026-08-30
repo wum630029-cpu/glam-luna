@@ -1,0 +1,56 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import { getCollection } from 'astro:content';
+import { SITE, EDUCATION_CATEGORIES, categoryName } from '../../../config';
+
+export function getStaticPaths() {
+  return EDUCATION_CATEGORIES.map((c) => ({ params: { category: c.slug } }));
+}
+
+const { category } = Astro.params;
+const cat = EDUCATION_CATEGORIES.find((c) => c.slug === category);
+if (!cat) return Astro.redirect('/education/');
+
+const posts = (await getCollection('education', ({ data }) => data.category === category)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: cat.name,
+  url: new URL(`/education/category/${category}/`, SITE.url).href,
+  description: cat.description,
+};
+---
+
+<Base
+  title={cat.name}
+  description={cat.description}
+  canonical={`/education/category/${category}/`}
+  jsonLd={jsonLd}
+>
+  <Breadcrumb items={[{ label: '首页', href: '/' }, { label: '情趣内衣选购百科', href: '/education/' }, { label: cat.name }]} />
+  <h1 class="text-2xl font-bold">{cat.name}</h1>
+  <p class="mt-2 text-sm text-gray-600">{cat.description}</p>
+
+  <div class="mt-8 space-y-3">
+    {
+      posts.length > 0 ? (
+        posts.map((post) => (
+          <a
+            href={`/education/${post.id}/`}
+            class="flex flex-col gap-1 rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5 transition hover:shadow-md"
+          >
+            <span class="text-xs text-gray-400">{post.data.pubDate.toISOString().slice(0, 10)}</span>
+            <h2 class="font-semibold text-gray-900">{post.data.title}</h2>
+            <p class="text-sm leading-relaxed text-gray-500">{post.data.description}</p>
+          </a>
+        ))
+      ) : (
+        <p class="text-sm text-gray-400">该分类下暂无文章。</p>
+      )
+    }
+  </div>
+</Base>
