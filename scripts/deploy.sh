@@ -20,4 +20,7 @@ npm run build
 echo "▶ 部署到 Cloudflare Pages (glam-luna)..."
 npx wrangler pages deploy dist --project-name=glam-luna --commit-dirty=true
 
+echo "▶ 提交新 URL 到 IndexNow (Bing)..."
+node scripts/indexnow.mjs || echo "⚠️  IndexNow 提交失败（不影响部署，可稍后重跑 deploy）"
+
 echo "✅ 完成，已上线：https://glamluna.net"
