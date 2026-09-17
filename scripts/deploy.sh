@@ -14,6 +14,9 @@ fi
 
 export CLOUDFLARE_API_TOKEN="$(cat ~/.cloudflare-token)"
 
+# 本机 Clash 代理(127.0.0.1:7890)会拦 Cloudflare API，导致 wrangler fetch failed
+unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY all_proxy ALL_PROXY
+
 echo "▶ 构建中..."
 npm run build
 

@@ -3,6 +3,12 @@
  * 商品板块暂时不启用，NAV 中已预留注释，上线商品时取消注释即可。
  */
 
+import guideCover from './assets/education/guide.png';
+import bodyCover from './assets/education/body.png';
+import styleCover from './assets/education/style.png';
+import sceneCover from './assets/education/scene.png';
+import materialCover from './assets/education/material.png';
+
 // TODO: 替换成真实站点信息
 export const SITE = {
   name: '伊菲塔',
@@ -24,11 +30,11 @@ export const NAV = [
 
 /** 情趣内衣选购百科 5 个子分类（卡片样式统一由 CategoryCard 组件控制） */
 export const EDUCATION_CATEGORIES = [
-  { slug: 'guide', name: '选购指南', description: '怎么选、选什么，帮你挑对第一件' },
-  { slug: 'body', name: '身材穿搭', description: '不同身材怎么穿更出彩' },
-  { slug: 'style', name: '款式百科', description: '睡裙、连体衣、吊带……款式一次看懂' },
-  { slug: 'scene', name: '场景节日', description: '约会、纪念日、节日氛围怎么搭' },
-  { slug: 'material', name: '材质保养', description: '蕾丝、真丝、网纱的挑选与养护' },
+  { slug: 'guide', name: '选购指南', description: '怎么选、选什么，帮你挑对第一件', cover: guideCover },
+  { slug: 'body', name: '身材穿搭', description: '不同身材怎么穿更出彩', cover: bodyCover },
+  { slug: 'style', name: '款式百科', description: '睡裙、连体衣、吊带……款式一次看懂', cover: styleCover },
+  { slug: 'scene', name: '场景节日', description: '约会、纪念日、节日氛围怎么搭', cover: sceneCover },
+  { slug: 'material', name: '材质保养', description: '蕾丝、真丝、网纱的挑选与养护', cover: materialCover },
 ] as const;
 
 export type EducationCategory = (typeof EDUCATION_CATEGORIES)[number]['name'];
