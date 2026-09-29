@@ -1,43 +1,34 @@
-# Astro Starter Kit: Minimal
+# 伊菲塔 GlamLuna · 情趣内衣选购与穿搭指南
+
+> 女性内衣 / 情趣内衣的选购科普、身材穿搭、款式百科与材质保养内容站。
+
+🌐 **线上站点：<https://glamluna.net>**
+
+## 主要板块
+
+- [情趣内衣选购百科](https://glamluna.net/education/) — 选购指南、身材穿搭、款式百科、场景节日、材质保养
+- [模特穿搭](https://glamluna.net/outfits/) — 小红书式图文穿搭笔记
+- [尺码表](https://glamluna.net/size-guide/) — 尺码对照与测量计算器
+- [关于](https://glamluna.net/about/) — 品牌介绍与免责声明
+
+## 技术栈
+
+- [Astro](https://astro.build) 静态站点生成
+- Tailwind CSS 4
+- 内容集合（Content Collections）+ Markdown
+- 部署在 Cloudflare Pages，每次部署自动通过 IndexNow 通知 Bing
+
+## 本地开发
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 部署
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+./scripts/deploy.sh
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+> 内容仅供 18 岁以上成年人阅读。
