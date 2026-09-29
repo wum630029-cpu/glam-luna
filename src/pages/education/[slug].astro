@@ -16,6 +16,10 @@ const { Content, headings = [] } = await render(post);
 const { title, description, cover, category, pubDate, updatedDate, tags, author, faq = [], tldr } =
   post.data;
 
+const pubStr = pubDate.toISOString().slice(0, 10);
+const updStr = (updatedDate ?? pubDate).toISOString().slice(0, 10);
+const hasRealUpdate = updatedDate && updatedDate.getTime() !== pubDate.getTime();
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -63,10 +67,7 @@ const faqJsonLd =
     />
     <h1 class="mt-2 max-w-4xl text-2xl font-bold sm:text-3xl">{title}</h1>
     <p class="mt-2 text-sm text-gray-500">
-      {author} · {pubDate.toISOString().slice(0, 10)}
-      {updatedDate && updatedDate.getTime() !== pubDate.getTime() && (
-        <span> · 更新于 {updatedDate.toISOString().slice(0, 10)}</span>
-      )}
+      {author} · {hasRealUpdate ? `发布于 ${pubStr} · 更新于 ${updStr}` : `更新于 ${updStr}`}
     </p>
 
     {cover && (
