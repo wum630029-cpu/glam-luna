@@ -6,7 +6,9 @@ import { SITE, NAV, EDUCATION_CATEGORIES } from '../config';
   <div class="mx-auto max-w-7xl px-4 py-10">
     <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
       <div class="col-span-2 sm:col-span-1">
-        <p class="font-display text-lg font-semibold tracking-[0.14em]" style={`color: #000`}>{SITE.name}</p>
+        <p class="font-display text-lg font-semibold tracking-[0.14em]" style={`color: #000`}>
+          {SITE.name} <span class="text-sm font-normal tracking-normal text-gray-500">{SITE.nameEn}</span>
+        </p>
         <p class="mt-2 text-sm text-gray-600">{SITE.description}</p>
       </div>
       <div>

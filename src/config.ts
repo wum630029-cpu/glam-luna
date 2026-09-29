@@ -10,10 +10,13 @@ import sceneCover from './assets/education/scene.png';
 import materialCover from './assets/education/material.png';
 
 // TODO: 替换成真实站点信息
+// 品牌统一：中文名「伊菲塔」= 英文名/域名「GlamLuna」，同一品牌，全站并写以帮助搜索引擎识别
 export const SITE = {
   name: '伊菲塔',
+  nameEn: 'GlamLuna',
   url: 'https://glamluna.net',
-  description: '伊菲塔情趣内衣选购与穿搭指南',
+  tagline: '女性内衣选购、穿搭与护理指南',
+  description: '伊菲塔 GlamLuna 女性内衣选购、穿搭与护理指南',
   language: 'zh-CN',
   logo: '/logo.jpg',
 };

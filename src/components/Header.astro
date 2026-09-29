@@ -8,8 +8,10 @@ const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.s
 <header class="sticky top-0 z-50 border-b border-black/5 backdrop-blur" style="background: rgb(248 247 245 / 92%);">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4">
     <a href="/" class="flex items-center gap-2">
-      <img src={SITE.logo} alt={SITE.name} class="h-8 w-8 rounded-full object-cover" />
-      <span class="font-display text-xl font-semibold tracking-[0.14em]" style={`color: #000`}>{SITE.name}</span>
+      <img src={SITE.logo} alt={`${SITE.name} ${SITE.nameEn}`} class="h-8 w-8 rounded-full object-cover" />
+      <span class="font-display text-xl font-semibold tracking-[0.14em]" style={`color: #000`}>
+        {SITE.name}<span class="ml-1.5 text-sm font-normal tracking-normal text-gray-500">{SITE.nameEn}</span>
+      </span>
     </a>
 
     <!-- 桌面端导航：细字距 · 黑色下划线选中态 -->

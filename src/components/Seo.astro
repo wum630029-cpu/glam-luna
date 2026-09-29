@@ -21,7 +21,8 @@ const {
   jsonLd,
 } = Astro.props;
 
-const fullTitle = title === SITE.name ? title : `${title} - ${SITE.name}`;
+const isHomeTitle = title === SITE.name || title === `${SITE.name} ${SITE.nameEn}`;
+const fullTitle = isHomeTitle ? title : `${title} - ${SITE.name}`;
 const canonicalUrl = canonical ? new URL(canonical, Astro.site).href : Astro.url.href;
 const ogImage = image ? new URL(image, Astro.site).href : undefined;
 const jsonLdList = (Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []).filter(Boolean);
