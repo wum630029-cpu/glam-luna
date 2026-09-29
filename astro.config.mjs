@@ -17,9 +17,11 @@ function buildLastmodMap() {
     for (const f of readdirSync(dir)) {
       if (!f.endsWith('.md')) continue;
       const raw = readFileSync(`${dir}/${f}`, 'utf8');
-      const m = /^pubDate:\s*(\d{4}-\d{2}-\d{2})$/m.exec(raw);
-      if (!m) continue;
-      const d = new Date(m[1]);
+      const updated = /^updatedDate:\s*(\d{4}-\d{2}-\d{2})$/m.exec(raw);
+      const pub = /^pubDate:\s*(\d{4}-\d{2}-\d{2})$/m.exec(raw);
+      const dateStr = updated?.[1] ?? pub?.[1];
+      if (!dateStr) continue;
+      const d = new Date(dateStr);
       map.set(`/${coll}/${f.replace(/\.md$/, '')}/`, d);
       if (!latest || d > latest) latest = d;
     }
